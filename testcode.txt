@@ -1,0 +1,93 @@
+sll $t0, $s0, 2
+sll $t0, $s0, 2
+addi $gp, $gp, 200       # storing the address of first element of array in general purpose register
+lw $s0, 0 ($gp)             # initializing a variable for max i.e. statement signifying int min=0
+lw $s1, 0 ($gp)             # initializing a variable for min i.e. statement signifying int max=0
+lw $s2, 0 ($gp)             # initializing a variable for max i.e. statement signifying int avg=0
+addi $s3, $s3, 1            # initializing a variable i=1 to iterate in the loop
+addi $s4, $s4, 100        # initializing a variable to store the number of times loop will run
+addi $s5, $s5, 604       #storing the min variable at address 604 after the address of array
+addi $s6, $s6, 608       #storing the min index variable at address 608 after the address of array 
+addi $t0, $t0, 612         #storing the max variable at address 612 after the address of array
+addi $t1, $t1, 616         #storing the max index variable at address 616 after the address of array
+sw $0, 0 ($s6)           
+sw $0, 0 ($t1) 
+slt $t1, $t2, $s0
+sub $s0, $s2, $t1
+lh $s1, 20($s2)
+lhu $s2, 20($s3)
+sh $s3, 20($s4)
+lb $s4, 20($s5)
+lbu $s5, 20($s6)
+sb $s6, 20($s7)
+and $t8, $s0, $s1
+or $t9, $s0, $s1
+nor $t0, $s0, $s1
+jal 100
+j min
+j 100  
+
+ll $t0, $s0, 2
+sc $t0, 2($s0) 
+andi $t0, $t2, 4
+ori $t0, $t2, 4
+ beq $s3, $s4, end          #running the loop from $s3 to $s4 
+          addi $gp, $gp, 4             #location of the element at index=i+1 in the array
+          add $s2, $s2, $0 ($gp)    #calculating the sum of all elements of the array
+          addi $s3, $s3, 1            # iterating i i.e. i=i+1
+          addi $t2, $t2, 0             # initializing a variable to check if the current element is greater than present min
+          lw $t3, 0 ($gp)               
+          slt $t2, $t3, $s0            #using slt to set the value of $t2
+          beq $t2, $0, min   
+          lw $s0, 0 ($gp)            #loading s1- it contains the minimum of the array
+          sw $s3, 0 ($t0)
+min: sw $s0, 0 ($s5)           #address 604 has the min of the array
+
+          addi $t4, $t4, 0           #the code for finding the max has kind of same logic as that of min
+          lw $t3, 0 ($gp)         
+          slt $t2, $s1, $t3       
+          beq $t2, $0, max
+          lw $s1, 0 ($gp)
+          sw $s3, 0 ($t1)
+           max: sw $s1, 0 ($s6)
+end: addi $s4, $s4, 1 
+
+slt $t8, $t9, $s0 
+sltu $t8, $t9, $s0
+slti $t8, $t9, 20
+sltiu $t8, $t9, 20
+
+
+
+
+
+addi $gp, $gp, 200 # storing the address of first element of array in general purpose register
+lw $s0, 0 ($gp) # initializing a variable for max i.e. statement signifying int min=0
+lw $s1, 0 ($gp) # initializing a variable for min i.e. statement signifying int max=0
+lw $s2, 0 ($gp) # initializing a variable for max i.e. statement signifying int avg=0
+addi $s3, $s3, 1 # initializing a variable i=1 to iterate in the loop
+addi $s4, $s4, 100 # initializing a variable to store the number of times loop will run
+addi $s5, $s5, 604 #storing the min variable at address 604 after the address of array
+addi $s6, $s6, 608 #storing the min index variable at address 608 after the address of array
+addi $t0, $t0, 612 #storing the max variable at address 612 after the address of array
+addi $t1, $t1, 616 #storing the max index variable at address 616 after the address of array
+sw $0, 0 ($t0)
+sw $0, 0 ($t1)
+for: beq $s3, $s4, end #running the loop from $s3 to $s4
+addi $gp, $gp, 4 #location of the element at index=i+1 in the array
+add $s2, $s2, $0 ($gp) #calculating the sum of all elements of the array
+addi $s3, $s3, 1 # iterating i i.e. i=i+1
+addi $t2, $t2, 0 # initializing a variable to check if the current element is greater than present min
+lw $t3, 0 ($gp)
+slt $t2, $t3, $s0 #using slt to set the value of $t2
+beq $t2, $0, min
+lw $s0, 0 ($gp) #loading s1- it contains the minimum of the array
+sw $s3, 0 ($t0)
+min: sw $s0, 0 ($s5) #address 604 has the min of the array
+addi $t4, $t4, 0 #the code for finding the max has kind of same logic as that of min
+lw $t3, 0 ($gp)
+slt $t2, $s1, $t3
+beq $t2, $0, max
+
+lw $s1, 0 ($gp)
+sw $s3, 0 ($t1)
